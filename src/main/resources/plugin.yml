@@ -1,0 +1,6 @@
+name: HyperGUIs
+version: '0.1-DEV'
+main: ru.cl_cody.hyperGUIs.HyperGUIs
+api-version: '1.20'
+load: STARTUP
+authors: [ Cody ]
