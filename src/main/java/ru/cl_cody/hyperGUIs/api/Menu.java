@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public interface Menu {
-    String getTitle();
-    int getSize();
+    String title();
+    int size();
     Inventory getInventory(Player player);
 }

@@ -8,7 +8,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.cl_cody.hyperGUIs.api.Menu;
-import ru.cl_cody.hyperGUIs.api.MenuBuilder;
 import ru.cl_cody.hyperGUIs.api.elements.DropRegion;
 import ru.cl_cody.hyperGUIs.api.elements.MenuButton;
 import ru.cl_cody.hyperGUIs.api.impls.MenuImpl;
@@ -34,7 +33,7 @@ public class MenuListener implements Listener {
 
         // Название через InventoryView
         String openTitle = e.getView().getTitle();
-        if (!openTitle.equals(menu.getTitle())) return;
+        if (!openTitle.equals(menu.title())) return;
 
         // Блок перемещения
         e.setCancelled(true);
@@ -44,7 +43,7 @@ public class MenuListener implements Listener {
         if (clicked == null) return;
 
         // Находим нужную кнопку и вызываем её
-        for (MenuButton b : ((MenuImpl) menu).getButtons()) {
+        for (MenuButton b : ((MenuImpl) menu).buttons()) {
             if (b.getSlot() == e.getRawSlot()) {
                 b.handleClick(e, p);
                 break;
@@ -61,11 +60,11 @@ public class MenuListener implements Listener {
 
         // Проверка меню
         String openTitle = e.getView().getTitle();
-        if (!openTitle.equals(menu.getTitle())) return;
+        if (!openTitle.equals(menu.title())) return;
 
         // Разрешаем драг только в тех слотах, что указаны в регионах
         e.setCancelled(true); // по-умолчанию всё отменяем
-        for (DropRegion region : ((MenuImpl) menu).getRegions()) {
+        for (DropRegion region : ((MenuImpl) menu).regions()) {
             for (int slot : region.getSlots()) {
                 if (e.getRawSlots().contains(slot)) {
                     e.setCancelled(false);
@@ -84,7 +83,7 @@ public class MenuListener implements Listener {
 
         // Вызываем onClose у всех регионов
         ItemStack[] contents = e.getInventory().getContents();
-        for (DropRegion region : ((MenuImpl) menu).getRegions()) {
+        for (DropRegion region : ((MenuImpl) menu).regions()) {
             region.handleClose(p, contents);
         }
     }

@@ -3,7 +3,9 @@ package ru.cl_cody.hyperGUIs.api;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import ru.cl_cody.hyperGUIs.api.elements.DropRegion;
 import ru.cl_cody.hyperGUIs.api.elements.MenuButton;
+import ru.cl_cody.hyperGUIs.api.impls.MenuImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class MenuBuilder {
     private String title = "Menu";
     private int size = 9;
     private final List<MenuButton> buttons = new ArrayList<>();
+    private final List<DropRegion> regions = new ArrayList<>();
 
     public MenuBuilder setTitle(String title) {
         this.title = title;
@@ -29,18 +32,12 @@ public class MenuBuilder {
         return this;
     }
 
+    public MenuBuilder addRegion(DropRegion region) {
+        this.regions.add(region);
+        return this;
+    }
+
     public Menu build() {
-        return new Menu() {
-            @Override
-            public String getTitle() { return title; }
-            @Override
-            public int getSize() { return size; }
-            @Override
-            public Inventory getInventory(Player player) {
-                Inventory inv = Bukkit.createInventory(null, size, title);
-                buttons.forEach(b -> inv.setItem(b.getSlot(), b.getIcon()));
-                return inv;
-            }
-        };
+        return new MenuImpl(title, size, buttons, regions);
     }
 }
